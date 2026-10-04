@@ -1,5 +1,6 @@
 import { Captions, Clapperboard, Server } from "lucide-react";
 import { fadeText, MistPanel } from "@/components/atmosphere";
+import { FounderChip } from "@/components/founder";
 import { JoinForm } from "@/components/join-form";
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme";
@@ -10,8 +11,8 @@ import { SHOW_COUNT_FROM } from "@/lib/waitlist";
 
 const perks = [
   { icon: Clapperboard, text: "ضبط صفحه و چهره" },
-  { icon: Captions, text: "زیرنویس خودکار فارسی" },
-  { icon: Server, text: "سرورهای داخل کشور" },
+  { icon: Captions, text: "زیرنویس فارسی خودکار" },
+  { icon: Server, text: "سرور داخل ایران" },
 ];
 
 export default async function Home({ searchParams }: PageProps<"/">) {
@@ -35,17 +36,14 @@ export default async function Home({ searchParams }: PageProps<"/">) {
               {/* Dark scrim so the drifting mist never sits directly behind the headline */}
               <div className="pointer-events-none absolute -inset-x-24 -inset-y-16 -z-10" style={{ background: "radial-gradient(closest-side, rgba(0,0,0,0.6), rgba(0,0,0,0.3) 60%, transparent)" }} aria-hidden />
 
-              <div className="flex h-9 items-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.06] px-4 text-[13px] font-semibold text-white/85 backdrop-blur-md">
-                <span className="animate-pulse-dot size-2 rounded-full bg-accent-secondary" />
-                دسترسی محدود
-              </div>
+              <FounderChip />
 
               <h1 className="mt-7 text-[clamp(2.2rem,6vw,4.25rem)] leading-[1.35] font-semibold">
-                <span className={cn("inline-block pb-1", fadeText)}>زودتر از بقیه</span> <span className="inline-block">{BRAND.name} را امتحان کنید</span>
+                <span className="inline-block">سلام، من اروینم</span> <span className={cn("inline-block pb-1", fadeText)}>و {BRAND.name} رو می‌سازم</span>
               </h1>
 
               <p className="mt-5 max-w-xl text-base leading-8 text-white/65 sm:text-lg">
-                {BRAND.name} را قدم‌به‌قدم باز می‌کنیم. اسمتان را در فهرست انتظار بگذارید تا وقتی نوبتتان شد، دعوت‌نامه برایتان برسد.
+                {BRAND.name} یه ابزاره برای ضبط صفحه و چهره با زیرنویس فارسی. هنوز بسته‌ست و دارم یکی‌یکی راه می‌دم. اسمتون رو بنویسین تا وقتی نوبتتون شد، خودم دعوت‌نامه رو براتون بفرستم.
               </p>
 
               <div className="mt-9 w-full">
@@ -57,7 +55,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
                   <span className="font-semibold text-white/85" title={faNumber(count)}>
                     {fa(count)}
                   </span>{" "}
-                  نفر تا حالا در فهرست انتظار ثبت‌نام کرده‌اند
+                  نفر تا حالا اسمشون رو نوشتن
                 </p>
               )}
             </div>

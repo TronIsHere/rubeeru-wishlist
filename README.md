@@ -29,4 +29,5 @@ Marking someone «دعوت‌شده» only records it here; this app sends nothi
 
 - Rate limits (signup 6/h per IP, admin login 5/15 min per IP) are in memory: right for one server process, reset on restart.
 - Behind a proxy, make sure `x-forwarded-for` is set, or all visitors share one limit bucket.
+- The voice and photo are Erwin's (`FOUNDER` in `lib/brand.ts`, `public/erwin.png`, `components/founder.tsx`); change them there.
 - Brand lives in `lib/brand.ts`, `public/logo.svg`, `components/logo.tsx`: keep in sync with the main app.

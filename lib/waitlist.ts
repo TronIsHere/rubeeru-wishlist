@@ -7,12 +7,12 @@ export const STATUS_LABEL: Record<WaitStatus, string> = {
 };
 
 export const USE_OPTIONS = [
-  { value: "team", label: "تیم محصول و فنی" },
-  { value: "education", label: "آموزش و دوره‌ها" },
+  { value: "team", label: "کار تیمی / محصول و فنی" },
+  { value: "education", label: "آموزش و دوره" },
   { value: "support", label: "پشتیبانی مشتری" },
-  { value: "sales", label: "فروش و جذب مشتری" },
-  { value: "freelance", label: "فریلنسر یا کار مستقل" },
-  { value: "other", label: "سایر" },
+  { value: "sales", label: "فروش" },
+  { value: "freelance", label: "فریلنسر / کار آزاد" },
+  { value: "other", label: "چیز دیگه" },
 ] as const;
 
 export const USE_LABEL: Record<string, string> = Object.fromEntries(USE_OPTIONS.map((o) => [o.value, o.label]));

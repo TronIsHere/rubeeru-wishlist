@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { ThemeScript } from "@/components/theme";
-import { BRAND } from "@/lib/brand";
+import { BRAND, FOUNDER } from "@/lib/brand";
 import { THEME_COLORS } from "@/lib/theme";
 import "./globals.css";
 
@@ -26,9 +26,16 @@ const lalezar = localFont({
 
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-jetbrains", display: "swap" });
 
+const title = `${BRAND.name} | لیست انتظار`;
+const description = `من ${FOUNDER.name}م و ${BRAND.name} رو می‌سازم. هنوز بسته‌ست؛ اسمتون رو تو لیست انتظار بنویسین تا خودم دعوت‌نامه بفرستم.`;
+
 export const metadata: Metadata = {
-  title: `فهرست انتظار | ${BRAND.name}`,
-  description: `${BRAND.name} هنوز در دسترسی محدود است. اسمتان را در فهرست انتظار بگذارید تا دعوت‌نامه برایتان برسد. ${BRAND.tagline}`,
+  metadataBase: new URL(process.env.SITE_URL ?? "http://localhost:3210"),
+  title,
+  description,
+  authors: [{ name: FOUNDER.name, url: FOUNDER.url }],
+  openGraph: { title, description, type: "website", locale: "fa_IR", images: [{ url: FOUNDER.photo, width: 400, height: 400, alt: FOUNDER.name }] },
+  twitter: { card: "summary", title, description, creator: `@${FOUNDER.handle}`, images: [FOUNDER.photo] },
 };
 
 export const viewport: Viewport = {

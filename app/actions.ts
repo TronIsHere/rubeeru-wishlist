@@ -44,15 +44,15 @@ export async function joinWaitlist(_prev: JoinState, form: FormData): Promise<Jo
   // Bots fill the hidden field. They get the normal success screen and nothing is stored.
   if (str(form.get("company"), 50)) return { ok: true, position: 1 };
 
-  if (name.length < 2) return { error: "نام و نام خانوادگی را وارد کنید.", field: "name", values };
+  if (name.length < 2) return { error: "اسم و فامیلتون رو بنویسین.", field: "name", values };
   const email = parseEmail(emailRaw);
-  if (!email) return { error: "ایمیل درست نیست.", field: "email", values };
+  if (!email) return { error: "این ایمیل درست به نظر نمی‌رسه.", field: "email", values };
   const x = parseX(xRaw);
-  if (!x) return { error: "حساب یا شناسهٔ X درست نیست.", field: "x", values };
+  if (!x) return { error: "اکانت یا آیدی X درست نیست.", field: "x", values };
 
   const h = await headers();
   const ip = h.get("x-forwarded-for")?.split(",")[0]?.trim() || h.get("x-real-ip") || "local";
-  if (rateLimited(`join:${ip}`, 6, 60 * 60_000)) return { error: "تلاش‌های زیادی از این شبکه ثبت شد. کمی بعد دوباره امتحان کنید.", values };
+  if (rateLimited(`join:${ip}`, 6, 60 * 60_000)) return { error: "خیلی زیاد امتحان کردین. یه کم بعد دوباره بیاین.", values };
 
   const ref = str(form.get("ref"), 40).replace(/[^\w.-]/g, "");
   const key = `email:${email}`;
