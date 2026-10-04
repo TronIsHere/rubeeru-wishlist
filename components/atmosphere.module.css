@@ -1,0 +1,90 @@
+/*
+ * Dark "mist" panel, same look as the main app's landing: slate mist with a brand-blue glow.
+ * Copied from the rubeeru app (components/landing/atmosphere.module.css), trimmed to what this page uses.
+ */
+.ink {
+  background: var(--ink);
+}
+
+:global(.dark) .ink {
+  outline: 1px solid rgb(255 255 255 / 0.06);
+  outline-offset: -1px;
+}
+
+.grain {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.6'/></svg>");
+  mix-blend-mode: overlay;
+  opacity: 0.12;
+}
+
+/* Headline phrase on dark: white fading into blue toward its end (left in RTL), with a light sweep */
+.fadeText {
+  background-image:
+    linear-gradient(100deg, transparent 42%, rgba(255, 255, 255, 0.95) 50%, transparent 58%),
+    linear-gradient(to left, #fff 12%, #c7d4ff 55%, #7c9bff 100%);
+  background-size:
+    250% 100%,
+    100% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sweep 5.5s ease-in-out infinite;
+}
+
+@keyframes sweep {
+  0% {
+    background-position:
+      160% 0,
+      0 0;
+  }
+  60%,
+  100% {
+    background-position:
+      -60% 0,
+      0 0;
+  }
+}
+
+.twinkle {
+  animation: twinkle var(--d) ease-in-out var(--delay) infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: var(--o);
+  }
+  50% {
+    opacity: calc(var(--o) * 0.15);
+  }
+}
+
+.ping::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  animation: ping 2.8s cubic-bezier(0, 0, 0.2, 1) var(--delay, 0s) infinite;
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  80%,
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fadeText,
+  .twinkle,
+  .ping::before {
+    animation: none;
+  }
+}

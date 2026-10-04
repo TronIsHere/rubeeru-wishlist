@@ -1,0 +1,260 @@
+@import "tailwindcss";
+
+/* Dark theme follows the `.dark` class on <html>, set before paint by the theme script in app/layout.tsx. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Design tokens — "Minimalist Modern".
+ * Light and dark palettes share token names; components never pick colors per theme.
+ * Inverted elements use `foreground` as background (ink pill in light, light pill in dark).
+ * Surfaces that must stay dark in both themes (mist panels, video, code) use `ink`.
+ * Record-red and success-green are status colors only, never decoration.
+ */
+:root {
+  --background: #fafafa;
+  --foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #0052ff;
+  --accent-secondary: #4d7cff;
+  --accent-foreground: #ffffff;
+  --accent-soft: #ebf1ff;
+  --border: #e2e8f0;
+  --card: #ffffff;
+  --ring: #0052ff;
+
+  --rec: #e11d48;
+  --rec-soft: #ffe4ea;
+  --success: #059669;
+  --success-soft: #dcfce7;
+  --warning: #f59e0b;
+  --warning-foreground: #b45309;
+
+  --gradient-accent: linear-gradient(to left, #0052ff, #4d7cff);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  /* rgb channels for shadows */
+  /* Always-dark surfaces: mist panels, video, code */
+  --ink: #070a12;
+  --shadow-rgb: 15 23 42;
+  --shadow-strength: 1;
+  color-scheme: light;
+}
+
+/*
+ * Dark: near-black like /landing2. Surfaces are white at low alpha over the base
+ * (card ≈ 4%, muted ≈ 7%, border ≈ 10%), so the mist panels' ink sits a hair above the page.
+ */
+.dark {
+  --background: #050507;
+  --foreground: #f1f3f6;
+  --muted: #17181b;
+  --muted-foreground: #8b919c;
+  --accent: #4d7cff;
+  --accent-secondary: #7c9dff;
+  --accent-foreground: #ffffff;
+  --accent-soft: #0e1530;
+  --border: #1f2024;
+  --card: #0f1013;
+  --ring: #7c9dff;
+
+  --rec: #f43f5e;
+  --rec-soft: #2b1117;
+  --success: #34d399;
+  --success-soft: #0f2a20;
+  --warning: #fbbf24;
+  --warning-foreground: #fbbf24;
+
+  --gradient-accent: linear-gradient(to left, #3366ff, #7c9dff);
+  /* Neutral like /landing2's ink, so panels don't read navy on the black page */
+  --ink: #08090c;
+  --shadow-rgb: 0 0 0;
+  --shadow-strength: 4;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-ring: var(--ring);
+  --color-rec: var(--rec);
+  --color-rec-soft: var(--rec-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  /* Near-black of the dark "mist" panels */
+  --color-ink: var(--ink);
+
+  /* Persian first; Latin fragments fall through to the Latin faces. */
+  --font-sans: var(--font-iransans), Tahoma, sans-serif;
+  /* Headlines: IRANSans semibold (merged design). Lalezar is kept for the wordmark only. */
+  --font-display: var(--font-iransans), Tahoma, sans-serif;
+  --font-brand: var(--font-lalezar), var(--font-iransans), serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  /* IRANSans draws every digit in Persian form; URLs, emails and codes like 720p need real Latin digits. */
+  --font-latin: ui-sans-serif, -apple-system, "Segoe UI", system-ui, sans-serif;
+
+  --shadow-sm: 0 1px 3px rgb(var(--shadow-rgb) / calc(0.06 * var(--shadow-strength)));
+  --shadow-md: 0 4px 6px rgb(var(--shadow-rgb) / calc(0.07 * var(--shadow-strength)));
+  --shadow-lg: 0 10px 15px rgb(var(--shadow-rgb) / calc(0.08 * var(--shadow-strength)));
+  --shadow-xl: 0 20px 25px rgb(var(--shadow-rgb) / calc(0.1 * var(--shadow-strength)));
+  --shadow-accent: 0 4px 14px rgba(0, 82, 255, 0.25);
+  --shadow-accent-lg: 0 8px 24px rgba(0, 82, 255, 0.35);
+
+  --ease-out-expo: var(--ease-out-expo);
+
+  /* Guide-mandated sizes, named instead of ad-hoc arbitrary values */
+  --text-hero: 5.25rem;
+  --text-hero--line-height: 1.2;
+  --text-section: 3.25rem;
+  --text-section--line-height: 1.3;
+  --blur-glow: 150px;
+  --radius-organic: 4rem;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.8;
+  /* Never track Persian: letter-spacing breaks letter joining. */
+  letter-spacing: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.5;
+}
+
+@layer base {
+  .font-display {
+    font-weight: 600;
+  }
+}
+
+/* iOS Safari zooms on focus below 16px */
+@supports (-webkit-touch-callout: none) {
+  input,
+  textarea,
+  select {
+    font-size: max(1rem, 1em);
+  }
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+/* ---------- Signature utilities ---------- */
+
+@utility bg-gradient-accent {
+  background-image: var(--gradient-accent);
+}
+
+@utility text-gradient {
+  background-image: var(--gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Soft highlighter bar under a key headline word */
+@utility underline-gradient {
+  position: relative;
+  isolation: isolate;
+  &::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0.08em;
+    height: 0.28em;
+    z-index: -1;
+    border-radius: 0.125rem;
+    background: linear-gradient(to left, rgba(0, 82, 255, 0.15), rgba(77, 124, 255, 0.1));
+  }
+}
+
+/* Dot texture for inverted (dark) sections */
+@utility bg-dots {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+@utility bg-dots-dark {
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--foreground) 7%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Directional icons point the right way in RTL */
+[dir="rtl"] .flip-rtl {
+  transform: scaleX(-1);
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* ---------- Motion ---------- */
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+.animate-pop {
+  animation: pop-in 0.35s var(--ease-out-expo);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-pulse-dot {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
